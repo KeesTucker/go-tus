@@ -49,6 +49,8 @@ func (u *Uploader) Upload() error {
 			return err
 		}
 	}
+	// close channel to prevent leaked goroutines due to broadcastProgress blocking.
+	close(u.notifyChan)
 
 	return nil
 }
